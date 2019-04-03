@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import game.AbstractPlayer;
 import game.BoardSquare;
 import game.Move;
+import javax.swing.border.Border;
 
 /**
  *
@@ -32,8 +33,7 @@ public class Display extends JFrame {
     private ButtonBoardPlace[][] buttons;
     private ButtonBoardPlace[][] buttonsGameRecord;
     private GridLayout gridLayout;
-    private static String path;
-    private static final int BUTTON_SIZE = 50;
+    private static String path;    
     private static int row, col;
     private static boolean click = false;
     private JLabel playerTurn, player1Name, player2Name, winner;
@@ -49,6 +49,21 @@ public class Display extends JFrame {
     public static boolean ENABLE = true;
     public static int TIME = 500;
     public static Icon blue, red, blue_red, red_blue, blue_winner, red_winner, blue_player, red_player;
+    
+    private final int BUTTON_SIZE = 50;
+    
+    private final Color COLOR_WHITE = Color.WHITE;
+    private final Color COLOR_BOARD = new Color(41, 110, 55); //green
+    private final Color COLOR_BOARD_LEFT_CORNER = new Color(2, 23, 7); //darker green
+    private final Color COLOR_BOARD_INDEX = new Color(4, 51, 15); 
+    
+    private final Border BORDER_BLACK = BorderFactory.createLineBorder(Color.BLACK);
+    private final Border BORDER_WHITE = BorderFactory.createLineBorder(COLOR_WHITE);
+    private final Border BORDER_HIGHLIGHT = BorderFactory.createLineBorder(Color.YELLOW);
+    private final Font FONT_BOARD = new java.awt.Font("Lucida Grande", 1, 18);   
+    private final Font FONT_PLAYER = new Font("Verdana", 0, 20); 
+    private final Font FONT_SCORE = new Font("Verdana", 0, 35);  
+    
 
     /**
      * Reports to display who will be the players of this game
@@ -111,6 +126,7 @@ public class Display extends JFrame {
             try {
                 wait();
             } catch (InterruptedException exception) {
+                System.out.println(exception.getMessage());
             }
         }
         click = true;
@@ -122,7 +138,7 @@ public class Display extends JFrame {
             try {
                 wait();
             } catch (InterruptedException exception) {
-
+                System.out.println(exception.getMessage());
             }
         }
         click = false;
@@ -133,30 +149,28 @@ public class Display extends JFrame {
     private void setBoard(JPanel board, ButtonBoardPlace[][] buttons) {
 
         gridLayout = new GridLayout(buttons.length + 1, buttons[0].length + 1, 0, 0);
-        board.setLayout(gridLayout);
-        board.setBackground(new Color(41, 110, 55));//green
-
+        board.setLayout(gridLayout);        
+        board.setBackground(COLOR_BOARD);
         JButton button = new JButton();
-        button.setBackground(new Color(2, 23, 7));//darked green
-        button.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
+        button.setBackground(COLOR_BOARD_LEFT_CORNER);
+        button.setBorder(BORDER_BLACK);
         button.setEnabled(false);
         board.add(button);
         for (int i = 0; i < buttons.length; i++) {
             if (i == 0) {
                 for (int j = 0; j < buttons[i].length; j++) {
-                    button = new JButton((char) (j + 97) + "");
+                    button = new JButton((char) (j + 97) + ""); // 97 == 'a'
                     button.setEnabled(false);
-                    button.setForeground(Color.yellow);
-                    button.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
-                    button.setBackground(new Color(4, 51, 15));
+                    button.setBorder(BORDER_BLACK);
+                    button.setBackground(COLOR_BOARD_INDEX);
                     board.add(button);
                 }
             }
             button = new JButton((i + 1) + "");
             button.setEnabled(false);
-            button.setForeground(new Color(255, 255, 255));
-            button.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
-            button.setBackground(new Color(4, 51, 15));
+            button.setForeground(COLOR_WHITE);
+            button.setBorder(BORDER_BLACK);
+            button.setBackground(COLOR_BOARD_INDEX);
             board.add(button);
             for (int j = 0; j < buttons[i].length; j++) {
                 buttons[i][j] = new ButtonBoardPlace();
@@ -175,30 +189,31 @@ public class Display extends JFrame {
         sideMenu.setBackground(Color.BLACK);
 
         playerTurn = new JLabel("Turn");
-        playerTurn.setFont(new Font("Verdana", 0, 20));
-        playerTurn.setForeground(new Color(255, 255, 255));
+               
+        playerTurn.setFont(FONT_PLAYER);        
+        playerTurn.setForeground(COLOR_WHITE);
 
         player1Name = new JLabel();
-        player1Name.setFont(new Font("Verdana", 0, 20));
-        player1Name.setForeground(new Color(255, 255, 255));
+        player1Name.setFont(FONT_PLAYER);
+        player1Name.setForeground(COLOR_WHITE);
 
         player1Score = new JLabel();
-        player1Score.setIcon(blue);
-        player1Score.setFont(new Font("Verdana", 0, 35));
-        player1Score.setForeground(new Color(255, 255, 255));
+        player1Score.setIcon(blue);        
+        player1Score.setFont(FONT_SCORE);
+        player1Score.setForeground(COLOR_WHITE);
 
         player2Name = new JLabel();
-        player2Name.setFont(new Font("Verdana", 0, 20));
-        player2Name.setForeground(new Color(255, 255, 255));
+        player2Name.setFont(FONT_PLAYER);
+        player2Name.setForeground(COLOR_WHITE);
 
         player2Score = new JLabel();
         player2Score.setIcon(red);
-        player2Score.setFont(new Font("Verdana", 0, 35));
-        player2Score.setForeground(new Color(255, 255, 255));
+        player2Score.setFont(FONT_SCORE);
+        player2Score.setForeground(COLOR_WHITE);
 
         winner = new JLabel("Winner");
-        winner.setFont(new Font("Verdana", 0, 20));
-        winner.setForeground(new Color(255, 255, 255));
+        winner.setFont(FONT_PLAYER);
+        winner.setForeground(COLOR_WHITE);
         winner.setVisible(false);
 
         sideMenu.add(playerTurn);
@@ -267,13 +282,13 @@ public class Display extends JFrame {
             @Override
             public void mouseEntered(MouseEvent e) {
                 if (button.getMouseListener()) {
-                    button.getButton().setBorder(BorderFactory.createLineBorder(new Color(255, 255, 0)));
+                    button.getButton().setBorder(BORDER_HIGHLIGHT);
                 }
             }
             @Override
             public void mouseExited(MouseEvent e) {
                 if (button.getMouseListener()) {
-                    button.getButton().setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
+                    button.getButton().setBorder(BORDER_WHITE);
                 }
             }
         });
@@ -286,16 +301,17 @@ public class Display extends JFrame {
      * Cursor to the type DEFAULT_CURSOR
      *
      * 2 - Change the borders that are played valid for the white and the mouse cursor to the type HAND_CURSOR
-     *
-     * @see setBordasPretas()
+     *     
+     * @see setBlackBorders()
      * @param validPlays
+     * @param player
      */
     public void validPlays(List<Move> validPlays, AbstractPlayer player) {
         setBlackBorders();
         for (Move move : validPlays) {
             int i = move.getBardPlace().getRow();
             int j = move.getBardPlace().getCol();
-            buttons[i][j].getButton().setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255)));
+            buttons[i][j].getButton().setBorder(BorderFactory.createLineBorder(COLOR_WHITE));
             if (player instanceof HumanPlayerDisplay ) {
                 buttons[i][j].getButton().setCursor(new Cursor(Cursor.HAND_CURSOR));
                 buttons[i][j].setMouseListener(true);
@@ -311,7 +327,7 @@ public class Display extends JFrame {
     private void setBlackBorders() {
         for (ButtonBoardPlace[] jButtons : buttons) {
             for (ButtonBoardPlace button : jButtons) {
-                button.getButton().setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
+                button.getButton().setBorder(BORDER_BLACK);
                 button.getButton().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 button.setMouseListener(false);
             }
@@ -426,15 +442,14 @@ public class Display extends JFrame {
                 if (player.getBoardMark() == player1class.getBoardMark()) {
                     gameRecord[boardPlace.getRow()][boardPlace.getCol()] = gameRecordCounter;
                     buttonsGameRecord[boardPlace.getRow()][boardPlace.getCol()].getButton().setIcon(blue);
-
                 } else {
                     gameRecord[boardPlace.getRow()][boardPlace.getCol()] = gameRecordCounter;
                     buttonsGameRecord[boardPlace.getRow()][boardPlace.getCol()].getButton().setIcon(red);
                 }
-                buttonsGameRecord[boardPlace.getRow()][boardPlace.getCol()].getButton().setText(gameRecordCounter + "");
+                buttonsGameRecord[boardPlace.getRow()][boardPlace.getCol()].getButton().setText(String.valueOf(gameRecordCounter));
                 buttonsGameRecord[boardPlace.getRow()][boardPlace.getCol()].getButton().setContentAreaFilled(false);
-                buttonsGameRecord[boardPlace.getRow()][boardPlace.getCol()].getButton().setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-                buttonsGameRecord[boardPlace.getRow()][boardPlace.getCol()].getButton().setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
+                buttonsGameRecord[boardPlace.getRow()][boardPlace.getCol()].getButton().setFont(FONT_BOARD); // NOI18N
+                buttonsGameRecord[boardPlace.getRow()][boardPlace.getCol()].getButton().setBorder(BORDER_BLACK);
                 buttonsGameRecord[boardPlace.getRow()][boardPlace.getCol()].getButton().setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
                 buttonsGameRecord[boardPlace.getRow()][boardPlace.getCol()].getButton().setPreferredSize(new Dimension((int) (BUTTON_SIZE * 0.5), (int) (BUTTON_SIZE * 0.5)));
             } catch (Exception e) {
@@ -455,15 +470,15 @@ public class Display extends JFrame {
         buttonsGameRecord[buttons.length / 2][buttons.length / 2 - 1].getButton().setText("");
         buttonsGameRecord[buttons.length / 2 - 1][buttons.length / 2 - 1].getButton().setText("");
 
-        buttonsGameRecord[buttons.length / 2][buttons.length / 2].getButton().setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
-        buttonsGameRecord[buttons.length / 2 - 1][buttons.length / 2].getButton().setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
-        buttonsGameRecord[buttons.length / 2][buttons.length / 2 - 1].getButton().setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
-        buttonsGameRecord[buttons.length / 2 - 1][buttons.length / 2 - 1].getButton().setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
+        buttonsGameRecord[buttons.length / 2][buttons.length / 2].getButton().setBorder(BORDER_BLACK);
+        buttonsGameRecord[buttons.length / 2 - 1][buttons.length / 2].getButton().setBorder(BORDER_BLACK);
+        buttonsGameRecord[buttons.length / 2][buttons.length / 2 - 1].getButton().setBorder(BORDER_BLACK);
+        buttonsGameRecord[buttons.length / 2 - 1][buttons.length / 2 - 1].getButton().setBorder(BORDER_BLACK);
         for (int i = 0; i < gameRecord.length; i++) {
             for (int j = 0; j < gameRecord[i].length; j++) {
                 buttonsGameRecord[i][j].getButton().setContentAreaFilled(false);
-                buttonsGameRecord[i][j].getButton().setFont(new java.awt.Font("Lucida Grande", 1, 18));
-                buttonsGameRecord[i][j].getButton().setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
+                buttonsGameRecord[i][j].getButton().setFont(FONT_BOARD);
+                buttonsGameRecord[i][j].getButton().setBorder(BORDER_BLACK);
                 buttonsGameRecord[i][j].getButton().setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
                 buttonsGameRecord[i][j].getButton().setPreferredSize(new Dimension((int) (BUTTON_SIZE * 0.8), (int) (BUTTON_SIZE * 0.8)));
                 buttonsGameRecord[i][j].setMouseListener(false);
@@ -495,8 +510,7 @@ public class Display extends JFrame {
         sideMenu.validate();
         sideMenu.repaint();
         frame.validate();
-        frame.repaint();
-        
+        frame.repaint();        
     }
 
     @SuppressWarnings("unchecked")
