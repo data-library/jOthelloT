@@ -71,7 +71,7 @@ public class Display extends JFrame {
         setTitle("jOthelloT");
         getContentPane().setBackground(Color.BLACK);
         String separator = File.separator;
-        path = System.getProperty("user.dir") + separator + "src" + separator + "Display" + separator + "images" + separator;
+        path = System.getProperty("user.dir") + separator + "src" + separator + "display" + separator + "images" + separator;
         blue_red = new ImageIcon(path + "blueRed.gif");
         red_blue = new ImageIcon(path + "redBlue.gif");
         red = new ImageIcon(path + "red.png");
