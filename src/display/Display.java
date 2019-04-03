@@ -341,17 +341,15 @@ public class Display extends JFrame {
                 if (board[i][j] == 1) {
                     if (buttons[i][j].getButton().getIcon() == null) {
                         buttons[i][j].getButton().setIcon(blue);
-                    } else if (String.valueOf(buttons[i][j].getButton().getIcon()).equals(String.valueOf(red))) {
-                        RedBlue transition = new RedBlue(buttons[i][j].getButton());
-                        new Thread(transition).start();
+                    } else if (String.valueOf(buttons[i][j].getButton().getIcon()).equals(String.valueOf(red))) {                        
+                        new Thread(new ButtonTransition(buttons[i][j].getButton(),red_blue, blue)).start();
                     }
                     p1++;
                 } else if (board[i][j] == -1) {
                     if (buttons[i][j].getButton().getIcon() == null) {
                         buttons[i][j].getButton().setIcon(red);
                     } else if (String.valueOf(buttons[i][j].getButton().getIcon()).equals(String.valueOf(blue))) {
-                        BlueRed transition = new BlueRed(buttons[i][j].getButton());
-                        new Thread(transition).start();
+                        new Thread(new ButtonTransition(buttons[i][j].getButton(),blue_red, red)).start();
                     }
                     p2++;
                 }
