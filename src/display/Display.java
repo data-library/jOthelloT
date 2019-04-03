@@ -57,8 +57,8 @@ public class Display extends JFrame {
      * @param player2
      */
     public void setPlayersName(AbstractPlayer player1, AbstractPlayer player2) {
-        this.player1class = player1;
-        this.player2class = player2;
+        player1class = player1;
+        player2class = player2;
         player1Name.setText(player1.getClass().getSimpleName());
         player2Name.setText(player2.getClass().getSimpleName());
     }
@@ -212,8 +212,8 @@ public class Display extends JFrame {
     }
 
     private void setScore(int player1, int player2) {
-        this.player1Score.setText(String.valueOf(player1));
-        this.player2Score.setText(String.valueOf(player2));
+        player1Score.setText(String.valueOf(player1));
+        player2Score.setText(String.valueOf(player2));
     }
 
     /**
@@ -421,7 +421,7 @@ public class Display extends JFrame {
             }
         }
         if(boardPlace.getRow()!=-1 && boardPlace.getCol()!=-1){
-        gameRecordCounter++;
+            gameRecordCounter++;
             try {
                 if (player.getBoardMark() == player1class.getBoardMark()) {
                     gameRecord[boardPlace.getRow()][boardPlace.getCol()] = gameRecordCounter;
@@ -438,7 +438,7 @@ public class Display extends JFrame {
                 buttonsGameRecord[boardPlace.getRow()][boardPlace.getCol()].getButton().setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
                 buttonsGameRecord[boardPlace.getRow()][boardPlace.getCol()].getButton().setPreferredSize(new Dimension((int) (BUTTON_SIZE * 0.5), (int) (BUTTON_SIZE * 0.5)));
             } catch (Exception e) {
-
+                System.err.println(e.getMessage());
             }
         }
     }
