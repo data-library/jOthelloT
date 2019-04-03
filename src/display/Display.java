@@ -152,6 +152,7 @@ public class Display extends JFrame {
         board.setLayout(gridLayout);        
         board.setBackground(COLOR_BOARD);
         JButton button = new JButton();
+        button.setFocusPainted(false);
         button.setBackground(COLOR_BOARD_LEFT_CORNER);
         button.setBorder(BORDER_BLACK);
         button.setEnabled(false);
@@ -160,6 +161,7 @@ public class Display extends JFrame {
             if (i == 0) {
                 for (int j = 0; j < buttons[i].length; j++) {
                     button = new JButton((char) (j + 97) + ""); // 97 == 'a'
+                    button.setFocusPainted(false);
                     button.setEnabled(false);
                     button.setBorder(BORDER_BLACK);
                     button.setBackground(COLOR_BOARD_INDEX);
@@ -167,6 +169,7 @@ public class Display extends JFrame {
                 }
             }
             button = new JButton((i + 1) + "");
+            button.setFocusPainted(false);
             button.setEnabled(false);
             button.setForeground(COLOR_WHITE);
             button.setBorder(BORDER_BLACK);
@@ -328,6 +331,7 @@ public class Display extends JFrame {
         for (ButtonBoardPlace[] jButtons : buttons) {
             for (ButtonBoardPlace button : jButtons) {
                 button.getButton().setBorder(BORDER_BLACK);
+                button.getButton().setFocusPainted(false);
                 button.getButton().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 button.setMouseListener(false);
             }
